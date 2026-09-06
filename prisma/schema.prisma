@@ -1,0 +1,113 @@
+// Prisma Schema for Vehicle Booking & Fleet Management System (PostgreSQL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  username     String       @unique
+  passwordHash String
+  name         String
+  role         String       @default("USER") // "USER" | "ADMIN"
+  department   String?
+  phone        String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  bookings     Booking[]
+  mileageLogs  MileageLog[]
+}
+
+model Vehicle {
+  id          Int          @id @default(autoincrement())
+  plateNumber String       @unique
+  model       String
+  capacity    Int          @default(5)
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  bookings    Booking[]
+  mileageLogs MileageLog[]
+}
+
+model Project {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  code      String?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  bookings  Booking[]
+}
+
+model Personnel {
+  id         Int                @id @default(autoincrement())
+  name       String             @unique
+  department String?
+  isActive   Boolean            @default(true)
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  bookings   BookingCompanion[]
+}
+
+model Booking {
+  id         Int                @id @default(autoincrement())
+  reason     String             // 借用事由
+  startDate  DateTime           // 預約日期/起始時間
+  endDate    DateTime           // 結束時間
+  timeSlot   String             // "MORNING", "AFTERNOON", "ALL_DAY", "CUSTOM"
+  status     String             @default("CONFIRMED") // "CONFIRMED", "CANCELLED", "COMPLETED"
+
+  vehicleId  Int
+  vehicle    Vehicle            @relation(fields: [vehicleId], references: [id])
+
+  projectId  Int?
+  project    Project?           @relation(fields: [projectId], references: [id])
+
+  userId     Int
+  user       User               @relation(fields: [userId], references: [id])
+
+  companions BookingCompanion[]
+  mileageLog MileageLog?
+
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+}
+
+model BookingCompanion {
+  bookingId   Int
+  personnelId Int
+
+  booking     Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  personnel   Personnel @relation(fields: [personnelId], references: [id], onDelete: Cascade)
+
+  @@id([bookingId, personnelId])
+}
+
+model MileageLog {
+  id           Int       @id @default(autoincrement())
+  startMileage Int       // 出發里程
+  endMileage   Int?      // 歸還里程
+  distance     Int?      // 行駛總里程
+  note         String?   // 備註
+
+  bookingId    Int       @unique
+  booking      Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  vehicleId    Int
+  vehicle      Vehicle   @relation(fields: [vehicleId], references: [id])
+
+  userId       Int
+  user         User      @relation(fields: [userId], references: [id])
+
+  loggedAt     DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
