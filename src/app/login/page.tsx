@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Car, Lock, User, AlertCircle, ArrowRight } from "lucide-react";
+import { Car, Lock, User, ArrowRight, AlertCircle, Loader2 } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -11,11 +11,16 @@ function LoginForm() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!username || !password) {
+      setErrorMsg("請輸入使用者帳號與密碼");
+      return;
+    }
+
     setErrorMsg("");
     setLoading(true);
 
@@ -42,12 +47,6 @@ function LoginForm() {
     }
   };
 
-  const handleFillDemo = (u: string, p: string) => {
-    setUsername(u);
-    setPassword(p);
-    setErrorMsg("");
-  };
-
   return (
     <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/40">
       {errorMsg && (
@@ -59,7 +58,7 @@ function LoginForm() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
             使用者帳號
           </label>
           <div className="relative">
@@ -68,17 +67,18 @@ function LoginForm() {
             </div>
             <input
               type="text"
-              required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="請輸入帳號（例如 admin）"
-              className="w-full pl-11 pr-4 py-3 bg-slate-950/60 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition text-sm"
+              placeholder="請輸入帳號"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm"
+              disabled={loading}
+              required
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
             登入密碼
           </label>
           <div className="relative">
@@ -87,11 +87,12 @@ function LoginForm() {
             </div>
             <input
               type="password"
-              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="請輸入密碼"
-              className="w-full pl-11 pr-4 py-3 bg-slate-950/60 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition text-sm"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition text-sm"
+              disabled={loading}
+              required
             />
           </div>
         </div>
@@ -99,35 +100,21 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-2 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-[0.99] text-white font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/30 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 flex items-center justify-center space-x-2 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
-          <span>{loading ? "驗證中..." : "登入系統"}</span>
-          <ArrowRight className="w-4 h-4" />
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>驗證登入中...</span>
+            </>
+          ) : (
+            <>
+              <span>登入系統</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
         </button>
       </form>
-
-      {/* 快速填入測試帳號 */}
-      <div className="mt-8 pt-6 border-t border-slate-800">
-        <span className="text-xs font-semibold text-slate-400 block mb-3 text-center">
-          測試帳號快捷填入
-        </span>
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={() => handleFillDemo("admin", "admin123")}
-            className="px-3 py-2.5 rounded-lg bg-slate-800/80 hover:bg-slate-750 border border-slate-700 text-xs font-medium text-slate-200 text-center transition hover:border-slate-600"
-          >
-            管理員 (admin)
-          </button>
-          <button
-            type="button"
-            onClick={() => handleFillDemo("user1", "user123")}
-            className="px-3 py-2.5 rounded-lg bg-slate-800/80 hover:bg-slate-750 border border-slate-700 text-xs font-medium text-slate-200 text-center transition hover:border-slate-600"
-          >
-            一般同仁 (user1)
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
