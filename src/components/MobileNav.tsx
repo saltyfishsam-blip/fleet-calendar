@@ -3,12 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Calendar, Gauge, Shield, User } from "lucide-react";
+import { Calendar, Gauge, Shield } from "lucide-react";
 
 interface CurrentUser {
-  userId: number;
-  username: string;
-  name: string;
   role: "USER" | "ADMIN";
 }
 
@@ -28,43 +25,43 @@ export default function MobileNav() {
   if (pathname === "/login") return null;
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 px-3 py-2">
-      <nav className="flex items-center justify-around">
+    <div className="md:hidden fixed bottom-3 inset-x-4 z-50 pointer-events-none">
+      <nav className="pointer-events-auto max-w-md mx-auto backdrop-blur-2xl bg-slate-950/85 border border-white/[0.12] rounded-2xl p-1.5 shadow-2xl shadow-black/80 flex items-center justify-around ring-1 ring-white/5">
         <Link
           href="/calendar"
-          className={`flex flex-col items-center py-1 px-3 rounded-lg text-xs font-medium transition ${
+          className={`flex-1 flex flex-col items-center py-2 px-1 rounded-xl transition-all duration-150 ${
             pathname.startsWith("/calendar")
-              ? "text-blue-400 font-bold"
+              ? "bg-blue-600/25 text-blue-400 font-bold border border-blue-500/30"
               : "text-slate-400 hover:text-slate-200"
           }`}
         >
-          <Calendar className="w-5 h-5 mb-1" />
-          <span>約車表</span>
+          <Calendar className="w-4 h-4 mb-1" />
+          <span className="text-[11px] font-medium">約車行事曆</span>
         </Link>
 
         <Link
           href="/mileage"
-          className={`flex flex-col items-center py-1 px-3 rounded-lg text-xs font-medium transition ${
+          className={`flex-1 flex flex-col items-center py-2 px-1 rounded-xl transition-all duration-150 ${
             pathname.startsWith("/mileage")
-              ? "text-blue-400 font-bold"
+              ? "bg-blue-600/25 text-blue-400 font-bold border border-blue-500/30"
               : "text-slate-400 hover:text-slate-200"
           }`}
         >
-          <Gauge className="w-5 h-5 mb-1" />
-          <span>里程登記</span>
+          <Gauge className="w-4 h-4 mb-1" />
+          <span className="text-[11px] font-medium">里程回報</span>
         </Link>
 
         {currentUser?.role === "ADMIN" && (
           <Link
             href="/admin"
-            className={`flex flex-col items-center py-1 px-3 rounded-lg text-xs font-medium transition ${
+            className={`flex-1 flex flex-col items-center py-2 px-1 rounded-xl transition-all duration-150 ${
               pathname.startsWith("/admin")
-                ? "text-indigo-400 font-bold"
+                ? "bg-purple-600/25 text-purple-400 font-bold border border-purple-500/30"
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
-            <Shield className="w-5 h-5 mb-1" />
-            <span>後台管理</span>
+            <Shield className="w-4 h-4 mb-1 text-amber-400" />
+            <span className="text-[11px] font-medium">後台控管</span>
           </Link>
         )}
       </nav>
