@@ -223,35 +223,35 @@ export default function CalendarPage() {
       <WeatherWidget />
 
       {/* 頂部控制工具列 */}
-      <div className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] rounded-2xl p-4 sm:p-5 mb-6 shadow-2xl shadow-black/40 ring-1 ring-white/5">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 mb-6 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           {/* 年月導覽與快速按鈕 */}
           <div className="flex items-center justify-between sm:justify-start space-x-3">
-            <div className="flex items-center space-x-1.5 bg-slate-950/80 p-1 rounded-xl border border-white/[0.1] shadow-inner">
+            <div className="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
               <button
                 onClick={handlePrevMonth}
-                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+                className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white transition cursor-pointer"
                 title="上個月"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleToday}
-                className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition cursor-pointer tracking-wide"
+                className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-white transition cursor-pointer tracking-wide"
               >
                 今日
               </button>
               <button
                 onClick={handleNextMonth}
-                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+                className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white transition cursor-pointer"
                 title="下個月"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
-            <h2 className="text-lg sm:text-xl font-black tracking-tight text-white flex items-center space-x-2">
-              <CalendarIcon className="w-5 h-5 text-blue-400 hidden sm:inline" />
+            <h2 className="text-lg sm:text-xl font-black tracking-tight text-slate-900 flex items-center space-x-2">
+              <CalendarIcon className="w-5 h-5 text-blue-600 hidden sm:inline" />
               <span>{year} 年 {month + 1} 月</span>
             </h2>
           </div>
@@ -259,16 +259,16 @@ export default function CalendarPage() {
           {/* 車輛篩選與檢視模式切換 */}
           <div className="flex flex-wrap items-center gap-2.5">
             {/* 車輛篩選下拉選單 */}
-            <div className="flex items-center space-x-2 bg-slate-950/80 border border-white/[0.1] rounded-xl px-3.5 py-1.5 flex-1 sm:flex-initial shadow-sm">
-              <Filter className="w-3.5 h-3.5 text-slate-400" />
+            <div className="flex items-center space-x-2 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-1.5 flex-1 sm:flex-initial shadow-xs">
+              <Filter className="w-3.5 h-3.5 text-slate-500" />
               <select
                 value={selectedVehicleId}
                 onChange={(e) => setSelectedVehicleId(e.target.value)}
-                className="bg-transparent text-xs sm:text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer"
+                className="bg-transparent text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none cursor-pointer"
               >
-                <option value="all" className="bg-slate-900">所有公務車輛</option>
+                <option value="all" className="bg-white text-slate-800">所有公務車輛</option>
                 {vehicles.map((v) => (
-                  <option key={v.id} value={v.id} className="bg-slate-900">
+                  <option key={v.id} value={v.id} className="bg-white text-slate-800">
                     {v.plateNumber} ({v.model})
                   </option>
                 ))}
@@ -276,13 +276,13 @@ export default function CalendarPage() {
             </div>
 
             {/* 檢視模式切換（月曆 / 清單） */}
-            <div className="flex items-center bg-slate-950/80 border border-white/[0.1] p-1 rounded-xl shadow-inner">
+            <div className="flex items-center bg-slate-100 border border-slate-200 p-1 rounded-xl shadow-inner">
               <button
                 onClick={() => setViewMode("month")}
                 className={`p-2 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer ${
                   viewMode === "month"
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 border border-white/20"
-                    : "text-slate-400 hover:text-slate-200"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
                 title="月曆檢視"
               >
@@ -293,8 +293,8 @@ export default function CalendarPage() {
                 onClick={() => setViewMode("agenda")}
                 className={`p-2 rounded-lg text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer ${
                   viewMode === "agenda"
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 border border-white/20"
-                    : "text-slate-400 hover:text-slate-200"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
                 title="日程清單檢視"
               >
@@ -310,7 +310,7 @@ export default function CalendarPage() {
                 setTargetDateForNewBooking(new Date().toISOString().split("T")[0]);
                 setIsBookingModalOpen(true);
               }}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold flex items-center space-x-2 shadow-lg shadow-indigo-500/25 border border-white/20 transition duration-150 active:scale-[0.98] cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold flex items-center space-x-2 shadow-sm shadow-blue-500/20 border border-blue-700/30 transition duration-150 active:scale-[0.98] cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>預約用車</span>
@@ -320,17 +320,17 @@ export default function CalendarPage() {
 
         {/* 車輛快速圖片切換選單 */}
         {vehicles.length > 0 && (
-          <div className="mt-3.5 pt-3 border-t border-white/[0.06] flex items-center space-x-2 overflow-x-auto pb-1">
-            <span className="text-[11px] font-bold text-slate-400 flex-shrink-0 mr-1">車輛篩選：</span>
+          <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center space-x-2 overflow-x-auto pb-1">
+            <span className="text-[11px] font-bold text-slate-500 flex-shrink-0 mr-1">車輛篩選：</span>
             <button
               onClick={() => setSelectedVehicleId("all")}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 flex-shrink-0 transition cursor-pointer border ${
                 selectedVehicleId === "all"
-                  ? "bg-blue-600/30 text-blue-300 border-blue-500/50 shadow-sm"
-                  : "bg-slate-950/60 text-slate-400 border-white/[0.06] hover:text-white hover:bg-slate-900"
+                  ? "bg-blue-50 text-blue-700 border-blue-300 shadow-xs"
+                  : "bg-slate-50 text-slate-600 border-slate-200 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <Car className="w-3.5 h-3.5 text-cyan-400" />
+              <Car className="w-3.5 h-3.5 text-blue-600" />
               <span>所有車輛 ({vehicles.length})</span>
             </button>
             {vehicles.map((v) => (
@@ -339,11 +339,11 @@ export default function CalendarPage() {
                 onClick={() => setSelectedVehicleId(String(v.id))}
                 className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 flex-shrink-0 transition cursor-pointer border ${
                   selectedVehicleId === String(v.id)
-                    ? "bg-blue-600/30 text-blue-300 border-blue-500/50 shadow-sm"
-                    : "bg-slate-950/60 text-slate-400 border-white/[0.06] hover:text-white hover:bg-slate-900"
+                    ? "bg-blue-50 text-blue-700 border-blue-300 shadow-xs"
+                    : "bg-slate-50 text-slate-600 border-slate-200 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
-                <div className="relative w-5 h-5 rounded-md overflow-hidden flex-shrink-0 border border-white/10 bg-slate-900">
+                <div className="relative w-5 h-5 rounded-md overflow-hidden flex-shrink-0 border border-slate-200 bg-slate-100">
                   <Image
                     src={getVehicleImage(v.model, v.plateNumber)}
                     alt={v.model}
@@ -353,25 +353,25 @@ export default function CalendarPage() {
                   />
                 </div>
                 <span className="font-mono">{v.plateNumber}</span>
-                <span className="text-[11px] text-slate-400 hidden sm:inline">{v.model}</span>
+                <span className="text-[11px] text-slate-500 hidden sm:inline">{v.model}</span>
               </button>
             ))}
           </div>
         )}
 
         {/* 時段圖例說明 */}
-        <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap items-center gap-4 text-xs text-slate-400 font-medium">
-          <span className="font-bold text-slate-300">時段圖例：</span>
+        <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-4 text-xs text-slate-600 font-medium">
+          <span className="font-bold text-slate-700">時段圖例：</span>
           <div className="flex items-center space-x-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
             <span>上午 (08:00 - 12:00)</span>
           </div>
           <div className="flex items-center space-x-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
             <span>下午 (13:00 - 17:30)</span>
           </div>
           <div className="flex items-center space-x-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
             <span>全天 (08:00 - 18:00)</span>
           </div>
         </div>
@@ -380,26 +380,26 @@ export default function CalendarPage() {
       {/* 主檢視區 */}
       {viewMode === "month" ? (
         /* 桌機與平板月曆網格 */
-        <div className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/40 overflow-hidden ring-1 ring-white/5">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
           {/* 星期標題 */}
-          <div className="grid grid-cols-7 border-b border-white/[0.08] bg-slate-950/80 text-center text-xs font-black text-slate-400 py-3.5 tracking-wider uppercase">
-            <span className="text-rose-400">週日</span>
+          <div className="grid grid-cols-7 border-b border-slate-200 bg-slate-50 text-center text-xs font-black text-slate-700 py-3.5 tracking-wider uppercase">
+            <span className="text-rose-600">週日</span>
             <span>週一</span>
             <span>週二</span>
             <span>週三</span>
             <span>週四</span>
             <span>週五</span>
-            <span className="text-cyan-400">週六</span>
+            <span className="text-blue-600">週六</span>
           </div>
 
           {/* 月曆日期格子 */}
-          <div className="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-white/[0.06] bg-slate-900/40">
+          <div className="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-slate-200 bg-white">
             {daysArray.map((dayNum, idx) => {
               if (dayNum === null) {
                 return (
                   <div
                     key={`empty-${idx}`}
-                    className="min-h-[110px] sm:min-h-[140px] bg-slate-950/40 p-1.5"
+                    className="min-h-[110px] sm:min-h-[140px] bg-slate-50/50 p-1.5"
                   />
                 );
               }
@@ -419,8 +419,8 @@ export default function CalendarPage() {
                     if ((e.target as HTMLElement).closest(".booking-badge")) return;
                     handleOpenNewForDate(dateStr);
                   }}
-                  className={`min-h-[110px] sm:min-h-[140px] p-2 sm:p-2.5 transition-all duration-150 group hover:bg-white/[0.03] cursor-pointer flex flex-col justify-between relative ${
-                    isToday ? "bg-blue-500/[0.08] ring-1 ring-inset ring-blue-500/30" : ""
+                  className={`min-h-[110px] sm:min-h-[140px] p-2 sm:p-2.5 transition-all duration-150 group hover:bg-slate-50/90 cursor-pointer flex flex-col justify-between relative ${
+                    isToday ? "bg-blue-50/40 ring-1 ring-inset ring-blue-300" : ""
                   }`}
                 >
                   <div>
@@ -429,14 +429,14 @@ export default function CalendarPage() {
                       <span
                         className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black transition-all ${
                           isToday
-                            ? "bg-gradient-to-tr from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-500/40 border border-white/20"
-                            : "text-slate-300 group-hover:text-white"
+                            ? "bg-blue-600 text-white shadow-sm shadow-blue-500/30"
+                            : "text-slate-700 group-hover:text-blue-600"
                         }`}
                       >
                         {dayNum}
                       </span>
                       {isToday && (
-                        <span className="text-[10px] font-bold text-cyan-400 tracking-wider uppercase hidden sm:inline px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
+                        <span className="text-[10px] font-bold text-blue-700 tracking-wider uppercase hidden sm:inline px-1.5 py-0.5 rounded bg-blue-100 border border-blue-200">
                           TODAY
                         </span>
                       )}
@@ -451,7 +451,7 @@ export default function CalendarPage() {
                             e.stopPropagation();
                             setSelectedBookingForDetail(b);
                           }}
-                          className={`booking-badge px-2 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer border shadow-sm truncate ${getSlotColor(
+                          className={`booking-badge px-2 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer border shadow-xs truncate ${getSlotColor(
                             b.timeSlot
                           )}`}
                           title={`${b.reason} (${b.user.name}) - ${b.vehicle.plateNumber}`}
@@ -469,7 +469,7 @@ export default function CalendarPage() {
 
                   {/* 空格新增預約提示 */}
                   {dayBookings.length === 0 && (
-                    <div className="text-[10px] font-bold text-slate-500 opacity-0 group-hover:opacity-100 transition text-center py-1">
+                    <div className="text-[10px] font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition text-center py-1">
                       + 預約用車
                     </div>
                   )}
@@ -482,10 +482,10 @@ export default function CalendarPage() {
         /* 手機端與清單日程檢視（Agenda View） */
         <div className="space-y-4">
           {bookings.length === 0 ? (
-            <div className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] rounded-2xl p-12 text-center text-slate-400 shadow-xl">
-              <CalendarIcon className="w-12 h-12 mx-auto mb-3 text-slate-600" />
-              <p className="text-base font-bold text-slate-200">本月份尚無預約紀錄</p>
-              <p className="text-xs text-slate-400 mt-1">點擊上方「預約用車」建立第一筆借用行程</p>
+            <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 shadow-sm">
+              <CalendarIcon className="w-12 h-12 mx-auto mb-3 text-slate-400" />
+              <p className="text-base font-bold text-slate-700">本月份尚無預約紀錄</p>
+              <p className="text-xs text-slate-500 mt-1">點擊上方「預約用車」建立第一筆借用行程</p>
             </div>
           ) : (
             bookings.map((b) => {
@@ -501,10 +501,10 @@ export default function CalendarPage() {
                 <div
                   key={b.id}
                   onClick={() => setSelectedBookingForDetail(b)}
-                  className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] hover:border-white/[0.18] rounded-2xl p-4 sm:p-5 shadow-xl transition-all duration-150 cursor-pointer active:scale-[0.99] group ring-1 ring-white/5 flex flex-col sm:flex-row gap-4 items-start"
+                  className="bg-white border border-slate-200 hover:border-blue-400 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all duration-150 cursor-pointer active:scale-[0.99] group flex flex-col sm:flex-row gap-4 items-start"
                 >
                   {/* 車輛縮圖 */}
-                  <div className="relative w-full sm:w-28 h-20 rounded-xl overflow-hidden flex-shrink-0 border border-white/10 bg-slate-950">
+                  <div className="relative w-full sm:w-28 h-20 rounded-xl overflow-hidden flex-shrink-0 border border-slate-200 bg-slate-100">
                     <Image
                       src={getVehicleImage(b.vehicle.model, b.vehicle.plateNumber)}
                       alt={b.vehicle.model}
@@ -512,8 +512,8 @@ export default function CalendarPage() {
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 640px) 100vw, 112px"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                    <span className="absolute bottom-1.5 left-2 font-mono text-[10px] font-bold text-white bg-slate-900/90 px-1.5 py-0.5 rounded border border-white/10 shadow-sm">
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+                    <span className="absolute bottom-1.5 left-2 font-mono text-[10px] font-bold text-white bg-slate-900/80 px-1.5 py-0.5 rounded shadow-xs">
                       {b.vehicle.plateNumber}
                     </span>
                   </div>
@@ -522,32 +522,32 @@ export default function CalendarPage() {
                   <div className="flex-1 min-w-0 w-full">
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="flex items-center space-x-2">
-                        <span className={`px-2 py-0.5 rounded-lg text-xs font-bold border shadow-sm ${getSlotColor(b.timeSlot)}`}>
+                        <span className={`px-2 py-0.5 rounded-lg text-xs font-bold border shadow-xs ${getSlotColor(b.timeSlot)}`}>
                           {b.timeSlot === "MORNING" ? "上午" : b.timeSlot === "AFTERNOON" ? "下午" : "全天"}
                         </span>
-                        <span className="text-sm font-black text-slate-100">{datePart}</span>
-                        <span className="text-xs text-slate-400 font-medium hidden sm:inline">{slotLabel}</span>
+                        <span className="text-sm font-black text-slate-900">{datePart}</span>
+                        <span className="text-xs text-slate-500 font-medium hidden sm:inline">{slotLabel}</span>
                       </div>
 
-                      <span className="text-xs text-slate-400 font-medium">
+                      <span className="text-xs text-slate-500 font-medium">
                         {b.vehicle.model}
                       </span>
                     </div>
 
                     {/* 借用事由 */}
-                    <h4 className="text-base font-bold text-white group-hover:text-cyan-400 transition mb-2 tracking-wide">
+                    <h4 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition mb-2 tracking-wide">
                       {b.reason}
                     </h4>
 
                     {/* 案件與借用人資訊 */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
-                      <div className="flex items-center space-x-1.5 text-slate-400">
-                        <Folder className="w-3.5 h-3.5 text-cyan-400" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600">
+                      <div className="flex items-center space-x-1.5 text-slate-500">
+                        <Folder className="w-3.5 h-3.5 text-blue-600" />
                         <span className="truncate">{b.project ? b.project.name : "一般洽公"}</span>
                       </div>
 
-                      <div className="flex items-center space-x-1.5 text-slate-400">
-                        <Users className="w-3.5 h-3.5 text-cyan-400" />
+                      <div className="flex items-center space-x-1.5 text-slate-500">
+                        <Users className="w-3.5 h-3.5 text-blue-600" />
                         <span className="truncate">
                           借用人：{b.user.name}
                           {b.companions.length > 0 ? ` + ${b.companions.length} 位同行` : ""}
@@ -557,12 +557,12 @@ export default function CalendarPage() {
 
                     {/* 同行人員 Chips */}
                     {b.companions.length > 0 && (
-                      <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap gap-1.5">
-                        <span className="text-xs text-slate-400 py-0.5 font-medium">同行人員：</span>
+                      <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
+                        <span className="text-xs text-slate-500 py-0.5 font-medium">同行人員：</span>
                         {b.companions.map((c) => (
                           <span
                             key={c.id}
-                            className="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 text-[11px] font-medium"
+                            className="px-2 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium"
                           >
                             {c.name}
                           </span>

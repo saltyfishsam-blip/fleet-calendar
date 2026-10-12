@@ -194,21 +194,21 @@ export default function BookingModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-lg bg-slate-900/90 border border-white/[0.12] rounded-3xl shadow-2xl shadow-black/80 overflow-hidden ring-1 ring-white/10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="w-full max-w-lg bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden">
         {/* 頂部標題 */}
-        <div className="px-6 py-4 border-b border-white/[0.08] bg-slate-950/60 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 border border-white/20">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20">
               <Car className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-white tracking-wide">
+            <h3 className="text-base font-bold text-slate-900 tracking-wide">
               {editBooking ? "修改用車預約" : "建立公務用車預約"}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1.5 rounded-xl hover:bg-white/[0.08] transition cursor-pointer"
+            className="text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-100 transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -217,8 +217,8 @@ export default function BookingModal({
         {/* 表單內容 */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[78vh] overflow-y-auto">
           {errorMsg && (
-            <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-start space-x-2.5 text-rose-400 text-xs font-semibold">
-              <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start space-x-2.5 text-rose-700 text-xs font-semibold">
+              <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-600" />
               <span>{errorMsg}</span>
             </div>
           )}
@@ -226,8 +226,8 @@ export default function BookingModal({
           {/* 預約日期與時段 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300 mb-1.5">
-                <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+              <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 mb-1.5">
+                <Calendar className="w-3.5 h-3.5 text-blue-600" />
                 <span>預約日期</span>
               </label>
               <input
@@ -235,19 +235,19 @@ export default function BookingModal({
                 required
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm font-semibold focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
 
             <div>
-              <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300 mb-1.5">
-                <Clock className="w-3.5 h-3.5 text-cyan-400" />
+              <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 mb-1.5">
+                <Clock className="w-3.5 h-3.5 text-blue-600" />
                 <span>預約時段</span>
               </label>
               <select
                 value={timeSlot}
                 onChange={(e) => setTimeSlot(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm font-semibold focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               >
                 <option value="MORNING">上午 (08:00 - 12:00)</option>
                 <option value="AFTERNOON">下午 (13:00 - 17:30)</option>
@@ -257,19 +257,19 @@ export default function BookingModal({
           </div>
 
           {/* 目的地與天氣預報輔助提示 */}
-          <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-white/[0.08] space-y-2">
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
             <div className="flex items-center justify-between">
-              <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300">
-                <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+              <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700">
+                <MapPin className="w-3.5 h-3.5 text-blue-600" />
                 <span>目的地縣市 (出勤氣象參考)</span>
               </label>
               <select
                 value={targetCity}
                 onChange={(e) => setTargetCity(e.target.value)}
-                className="bg-slate-900 border border-white/[0.1] rounded-xl px-2.5 py-1 text-xs font-bold text-white focus:outline-none focus:border-blue-500 cursor-pointer"
+                className="bg-white border border-slate-200 rounded-xl px-2.5 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-500 cursor-pointer"
               >
                 {TAIWAN_CITIES.map((c) => (
-                  <option key={c.name} value={c.name} className="bg-slate-900">
+                  <option key={c.name} value={c.name} className="bg-white text-slate-800">
                     {c.name}
                   </option>
                 ))}
@@ -277,14 +277,14 @@ export default function BookingModal({
             </div>
 
             {weatherTip && (
-              <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-300 font-medium">
+              <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
                 <div className="flex items-center space-x-2">
-                  <CloudSun className="w-4 h-4 text-amber-400" />
+                  <CloudSun className="w-4 h-4 text-amber-500" />
                   <span>
-                    {targetCity}預估：<strong className="text-white">{weatherTip.desc}</strong> ({weatherTip.tempRange})
+                    {targetCity}預估：<strong className="text-slate-900">{weatherTip.desc}</strong> ({weatherTip.tempRange})
                   </span>
                 </div>
-                <div className="flex items-center text-cyan-400 font-bold text-[11px]">
+                <div className="flex items-center text-blue-600 font-bold text-[11px]">
                   <Droplets className="w-3.5 h-3.5 mr-0.5" />
                   <span>降雨 {weatherTip.rainProb}%</span>
                 </div>
@@ -294,18 +294,18 @@ export default function BookingModal({
 
           {/* 選擇用車車輛 */}
           <div>
-            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300 mb-1.5">
-              <Car className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 mb-1.5">
+              <Car className="w-3.5 h-3.5 text-blue-600" />
               <span>借用車輛</span>
             </label>
             <select
               required
               value={vehicleId}
               onChange={(e) => setVehicleId(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm font-semibold focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               {vehicles.map((v) => (
-                <option key={v.id} value={v.id} className="bg-slate-900">
+                <option key={v.id} value={v.id} className="bg-white text-slate-800">
                   {v.plateNumber} · {v.model} ({v.capacity} 人座)
                 </option>
               ))}
@@ -316,8 +316,8 @@ export default function BookingModal({
               const selectedV = vehicles.find((v) => String(v.id) === String(vehicleId));
               if (!selectedV) return null;
               return (
-                <div className="mt-2.5 p-2.5 rounded-2xl bg-slate-950/70 border border-white/[0.08] flex items-center space-x-3">
-                  <div className="relative w-16 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/10 bg-slate-900">
+                <div className="mt-2.5 p-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center space-x-3">
+                  <div className="relative w-16 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-slate-200 bg-white">
                     <Image
                       src={getVehicleImage(selectedV.model, selectedV.plateNumber)}
                       alt={selectedV.model}
@@ -328,14 +328,14 @@ export default function BookingModal({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2">
-                      <span className="font-mono text-xs font-bold text-blue-300 px-1.5 py-0.5 rounded bg-blue-500/15 border border-blue-500/30">
+                      <span className="font-mono text-xs font-bold text-blue-700 px-1.5 py-0.5 rounded bg-blue-100 border border-blue-200">
                         {selectedV.plateNumber}
                       </span>
-                      <span className="text-xs text-slate-200 font-semibold truncate">
+                      <span className="text-xs text-slate-800 font-semibold truncate">
                         {selectedV.model}
                       </span>
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">
+                    <div className="text-[11px] text-slate-500 mt-0.5">
                       核准乘載：{selectedV.capacity} 人座
                     </div>
                   </div>
@@ -344,21 +344,20 @@ export default function BookingModal({
             })()}
           </div>
 
-
           {/* 計畫案件名稱 */}
           <div>
-            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300 mb-1.5">
-              <Folder className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 mb-1.5">
+              <Folder className="w-3.5 h-3.5 text-blue-600" />
               <span>計畫案件代號 / 名稱</span>
             </label>
             <select
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm font-semibold focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
-              <option value="" className="bg-slate-900">無特定專案 (一般公務洽公)</option>
+              <option value="" className="bg-white text-slate-800">無特定專案 (一般公務洽公)</option>
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-slate-900">
+                <option key={p.id} value={p.id} className="bg-white text-slate-800">
                   {p.name} {p.code ? `(${p.code})` : ""}
                 </option>
               ))}
@@ -367,8 +366,8 @@ export default function BookingModal({
 
           {/* 借用事由 */}
           <div>
-            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300 mb-1.5">
-              <FileText className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 mb-1.5">
+              <FileText className="w-3.5 h-3.5 text-blue-600" />
               <span>借用事由 / 目的地</span>
             </label>
             <input
@@ -377,17 +376,17 @@ export default function BookingModal({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="例：前往北區廠房進行設備例行檢查"
-              className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             />
           </div>
 
           {/* 同行人員多選標籤 */}
           <div>
-            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-300 mb-2">
-              <Users className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 mb-2">
+              <Users className="w-3.5 h-3.5 text-blue-600" />
               <span>同行人員（點選快速加入）</span>
             </label>
-            <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-2.5 bg-slate-950/60 border border-white/[0.08] rounded-2xl">
+            <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
               {personnelList.map((p) => {
                 const isSelected = selectedPersonnelIds.includes(p.id);
                 return (
@@ -397,14 +396,14 @@ export default function BookingModal({
                     onClick={() => togglePersonnel(p.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center space-x-1.5 border cursor-pointer ${
                       isSelected
-                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-white/20 shadow-md shadow-blue-500/20"
-                        : "bg-white/[0.03] text-slate-300 border-white/[0.08] hover:bg-white/[0.08]"
+                        ? "bg-blue-600 text-white border-blue-700 shadow-sm"
+                        : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100"
                     }`}
                   >
                     {isSelected && <Check className="w-3 h-3" />}
                     <span>{p.name}</span>
                     {p.department && (
-                      <span className={`text-[10px] ${isSelected ? "text-blue-200" : "text-slate-500"}`}>
+                      <span className={`text-[10px] ${isSelected ? "text-blue-200" : "text-slate-400"}`}>
                         ({p.department})
                       </span>
                     )}
@@ -412,7 +411,7 @@ export default function BookingModal({
                 );
               })}
               {personnelList.length === 0 && (
-                <span className="text-xs text-slate-500 p-1">暫無同行人員名冊</span>
+                <span className="text-xs text-slate-400 p-1">暫無同行人員名冊</span>
               )}
             </div>
           </div>
@@ -422,14 +421,14 @@ export default function BookingModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-2xl border border-white/[0.1] text-slate-300 hover:bg-white/[0.08] text-xs sm:text-sm font-bold transition cursor-pointer"
+              className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-bold transition cursor-pointer"
             >
               取消
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-blue-600/30 border border-white/20 transition duration-150 disabled:opacity-50 cursor-pointer"
+              className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm shadow-blue-500/20 border border-blue-700/30 transition duration-150 disabled:opacity-50 cursor-pointer"
             >
               {loading ? "處理中..." : editBooking ? "儲存修改" : "確認送出預約"}
             </button>
@@ -439,3 +438,4 @@ export default function BookingModal({
     </div>
   );
 }
+

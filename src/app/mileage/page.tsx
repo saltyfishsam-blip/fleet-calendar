@@ -177,16 +177,16 @@ export default function MileagePage() {
       {toastMsg && (
         <div className="fixed top-20 right-4 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
           <div
-            className={`px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-2.5 border text-xs font-semibold backdrop-blur-xl ${
+            className={`px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2.5 border text-xs font-semibold backdrop-blur-xl ${
               toastMsg.type === "success"
-                ? "bg-slate-950/90 border-emerald-500/50 text-emerald-400 ring-1 ring-emerald-500/20"
-                : "bg-slate-950/90 border-rose-500/50 text-rose-400 ring-1 ring-rose-500/20"
+                ? "bg-white border-emerald-300 text-emerald-800 shadow-emerald-500/10"
+                : "bg-white border-rose-300 text-rose-800 shadow-rose-500/10"
             }`}
           >
             {toastMsg.type === "success" ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             ) : (
-              <AlertCircle className="w-4 h-4 text-rose-400" />
+              <AlertCircle className="w-4 h-4 text-rose-600" />
             )}
             <span>{toastMsg.text}</span>
           </div>
@@ -194,28 +194,28 @@ export default function MileagePage() {
       )}
 
       {/* 標題與篩選列 */}
-      <div className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] rounded-2xl p-4 sm:p-5 mb-6 shadow-2xl shadow-black/40 ring-1 ring-white/5">
+      <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 mb-6 shadow-sm shadow-slate-100">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 border border-white/20">
+            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 flex items-center space-x-2.5">
+              <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
                 <Gauge className="w-5 h-5" />
               </div>
               <span>出車里程回報與結算</span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1 font-medium">
+            <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
               用車完畢後請及時登記出發與歸還里程數，維持車輛里程閉環資料正確性
             </p>
           </div>
 
           {/* 模式切換按鈕 */}
-          <div className="flex items-center bg-slate-950/80 border border-white/[0.1] p-1 rounded-xl shadow-inner">
+          <div className="flex items-center bg-slate-100 border border-slate-200/80 p-1 rounded-xl">
             <button
               onClick={() => setFilterMode("my")}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                 filterMode === "my"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 border border-white/20"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-blue-600 text-white shadow-sm shadow-blue-500/20"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               我的預約
@@ -224,8 +224,8 @@ export default function MileagePage() {
               onClick={() => setFilterMode("pending")}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                 filterMode === "pending"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 border border-white/20"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-blue-600 text-white shadow-sm shadow-blue-500/20"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               待結算里程
@@ -235,8 +235,8 @@ export default function MileagePage() {
                 onClick={() => setFilterMode("all")}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                   filterMode === "all"
-                    ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/20 border border-white/20"
-                    : "text-slate-400 hover:text-slate-200"
+                    ? "bg-indigo-600 text-white shadow-sm shadow-indigo-500/20"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 全域紀錄 (管理員)
@@ -248,12 +248,12 @@ export default function MileagePage() {
 
       {/* 里程紀錄清單 */}
       {loading ? (
-        <div className="py-20 text-center text-slate-500 font-medium">資料載入中...</div>
+        <div className="py-20 text-center text-slate-400 font-medium">資料載入中...</div>
       ) : records.length === 0 ? (
-        <div className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] rounded-2xl p-12 text-center text-slate-400 shadow-xl ring-1 ring-white/5">
-          <Gauge className="w-12 h-12 mx-auto mb-3 text-slate-600" />
-          <p className="text-base font-bold text-slate-200">目前無符合條件之里程紀錄</p>
-          <p className="text-xs text-slate-400 mt-1">請先至約車行事曆建立用車預約</p>
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-12 text-center text-slate-500 shadow-sm">
+          <Gauge className="w-12 h-12 mx-auto mb-3 text-slate-400" />
+          <p className="text-base font-bold text-slate-800">目前無符合條件之里程紀錄</p>
+          <p className="text-xs text-slate-500 mt-1">請先至約車行事曆建立用車預約</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -264,13 +264,13 @@ export default function MileagePage() {
             return (
               <div
                 key={r.id}
-                className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] hover:border-white/[0.18] rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between transition-all duration-150 ring-1 ring-white/5"
+                className="bg-white border border-slate-200/80 hover:border-slate-300 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md flex flex-col justify-between transition-all duration-150"
               >
                 <div>
                   {/* 車牌、車輛縮圖與日期 */}
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2.5">
-                      <div className="relative w-12 h-9 rounded-lg overflow-hidden border border-white/10 bg-slate-900 flex-shrink-0">
+                      <div className="relative w-12 h-9 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0">
                         <Image
                           src={getVehicleImage(r.vehicle.model, r.vehicle.plateNumber)}
                           alt={r.vehicle.model}
@@ -280,40 +280,40 @@ export default function MileagePage() {
                         />
                       </div>
                       <div>
-                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-slate-950 border border-white/[0.1] text-slate-200">
+                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-800">
                           {r.vehicle.plateNumber}
                         </span>
-                        <span className="text-[11px] text-slate-400 font-medium ml-2 hidden sm:inline">{r.vehicle.model}</span>
+                        <span className="text-[11px] text-slate-500 font-medium ml-2 hidden sm:inline">{r.vehicle.model}</span>
                       </div>
                     </div>
-                    <span className="text-xs text-slate-400 font-bold">{dateStr}</span>
+                    <span className="text-xs text-slate-500 font-bold">{dateStr}</span>
                   </div>
 
                   {/* 事由與借用人 */}
-                  <h3 className="text-base font-bold text-white mb-2 tracking-wide">{r.reason}</h3>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-400 mb-4 font-medium">
+                  <h3 className="text-base font-bold text-slate-900 mb-2 tracking-wide">{r.reason}</h3>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mb-4 font-medium">
                     <div className="flex items-center space-x-1">
-                      <User className="w-3.5 h-3.5 text-cyan-400" />
+                      <User className="w-3.5 h-3.5 text-blue-600" />
                       <span>借用同仁：{r.user.name}</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Car className="w-3.5 h-3.5 text-cyan-400" />
+                      <Car className="w-3.5 h-3.5 text-blue-600" />
                       <span>{r.vehicle.model}</span>
                     </div>
                   </div>
 
                   {/* 里程數值看板 */}
-                  <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-white/[0.08] space-y-2 mb-4 shadow-inner">
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 mb-4">
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div>
-                        <span className="text-slate-400 block font-medium">出發里程</span>
-                        <span className="font-mono font-bold text-slate-100 text-sm">
+                        <span className="text-slate-500 block font-medium">出發里程</span>
+                        <span className="font-mono font-bold text-slate-900 text-sm">
                           {r.mileageLog ? `${r.mileageLog.startMileage} km` : "尚未填寫"}
                         </span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block font-medium">歸還里程</span>
-                        <span className="font-mono font-bold text-slate-100 text-sm">
+                        <span className="text-slate-500 block font-medium">歸還里程</span>
+                        <span className="font-mono font-bold text-slate-900 text-sm">
                           {r.mileageLog?.endMileage !== null && r.mileageLog?.endMileage !== undefined
                             ? `${r.mileageLog.endMileage} km`
                             : "尚未歸還"}
@@ -322,16 +322,16 @@ export default function MileagePage() {
                     </div>
 
                     {r.mileageLog?.distance !== null && r.mileageLog?.distance !== undefined && (
-                      <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
-                        <span className="text-xs font-bold text-emerald-400">本次行駛總里程：</span>
-                        <span className="font-mono font-black text-emerald-400 text-base">
+                      <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
+                        <span className="text-xs font-bold text-emerald-700">本次行駛總里程：</span>
+                        <span className="font-mono font-black text-emerald-700 text-base">
                           +{r.mileageLog.distance} km
                         </span>
                       </div>
                     )}
 
                     {r.mileageLog?.note && (
-                      <p className="text-[11px] text-slate-300 border-t border-white/[0.06] pt-1.5 font-medium">
+                      <p className="text-[11px] text-slate-600 border-t border-slate-200 pt-1.5 font-medium">
                         備註：{r.mileageLog.note}
                       </p>
                     )}
@@ -343,8 +343,8 @@ export default function MileagePage() {
                   onClick={() => handleOpenMileageModal(r)}
                   className={`w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center space-x-2 transition cursor-pointer ${
                     hasSettled
-                      ? "bg-white/[0.06] hover:bg-white/[0.1] text-slate-200 border border-white/[0.1]"
-                      : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-600/25 border border-white/20"
+                      ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 shadow-sm"
+                      : "bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-500/20 border border-blue-700/30"
                   }`}
                 >
                   <Gauge className="w-4 h-4" />
@@ -358,43 +358,43 @@ export default function MileagePage() {
 
       {/* 里程回報彈窗 Modal */}
       {isModalOpen && selectedBooking && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-          <div className="bg-slate-900/90 border border-white/[0.12] w-full max-w-md rounded-3xl shadow-2xl shadow-black/80 overflow-hidden ring-1 ring-white/10">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden">
             {/* Modal 標題 */}
-            <div className="px-6 py-4 border-b border-white/[0.08] flex items-center justify-between bg-slate-950/60">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/80">
               <div className="flex items-center space-x-2.5">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center shadow-md shadow-blue-500/20 border border-white/20">
+                <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
                   <Gauge className="w-4 h-4" />
                 </div>
-                <h3 className="text-base font-bold text-white tracking-wide">里程登記與結算</h3>
+                <h3 className="text-base font-bold text-slate-900 tracking-wide">里程登記與結算</h3>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {/* 車輛資訊簡述 */}
-              <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-white/[0.08] text-xs text-slate-300 space-y-1 font-medium">
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1 font-medium">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">借用車輛：</span>
-                  <span className="font-bold text-white font-mono">
+                  <span className="text-slate-500">借用車輛：</span>
+                  <span className="font-bold text-slate-900 font-mono">
                     {selectedBooking.vehicle.plateNumber} ({selectedBooking.vehicle.model})
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">行程事由：</span>
-                  <span className="text-slate-200 font-semibold">{selectedBooking.reason}</span>
+                  <span className="text-slate-500">行程事由：</span>
+                  <span className="text-slate-900 font-semibold">{selectedBooking.reason}</span>
                 </div>
               </div>
 
               {errorMsg && (
-                <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold flex items-center space-x-2">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center space-x-2">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600" />
                   <span>{errorMsg}</span>
                 </div>
               )}
 
               {/* 出發里程 */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
                   出發里程數 (km)
                 </label>
                 <input
@@ -404,16 +404,16 @@ export default function MileagePage() {
                   value={startMileage}
                   onChange={(e) => setStartMileage(e.target.value)}
                   placeholder="例：12500"
-                  className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-slate-900 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                 />
-                <span className="text-[11px] text-slate-400 mt-1 block">
+                <span className="text-[11px] text-slate-500 mt-1 block">
                   系統已自動帶入該車輛前次結算里程，如儀表板數值不符請手動修正
                 </span>
               </div>
 
               {/* 歸還里程 */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
                   歸還里程數 (km) <span className="text-slate-400 font-normal">（出發前可暫留空）</span>
                 </label>
                 <input
@@ -422,13 +422,13 @@ export default function MileagePage() {
                   value={endMileage}
                   onChange={(e) => setEndMileage(e.target.value)}
                   placeholder="例：12580"
-                  className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-slate-900 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                 />
               </div>
 
               {/* 即時計算預覽 */}
               {calculatedDistance() !== null && (
-                <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-emerald-400 text-xs font-bold">
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-emerald-800 text-xs font-bold">
                   <span>本次行駛預計里程：</span>
                   <span className="font-mono text-base font-black">+{calculatedDistance()} km</span>
                 </div>
@@ -436,7 +436,7 @@ export default function MileagePage() {
 
               {/* 備註 */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
                   使用備註 (選填)
                 </label>
                 <textarea
@@ -444,7 +444,7 @@ export default function MileagePage() {
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="例：返程已加滿 95 無鉛汽油、車況良好"
-                  className="w-full px-3.5 py-2 bg-slate-950/80 border border-white/[0.1] rounded-xl text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 resize-none"
+                  className="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 resize-none"
                 />
               </div>
 
@@ -453,14 +453,14 @@ export default function MileagePage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-2.5 rounded-2xl border border-white/[0.1] text-slate-300 hover:bg-white/[0.08] text-xs sm:text-sm font-bold transition cursor-pointer"
+                  className="flex-1 py-2.5 rounded-2xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-bold transition cursor-pointer"
                 >
                   取消
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-blue-600/25 border border-white/20 transition disabled:opacity-50 cursor-pointer"
+                  className="flex-1 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm shadow-blue-500/20 border border-blue-700/30 transition disabled:opacity-50 cursor-pointer"
                 >
                   {submitting ? "儲存中..." : "確認儲存"}
                 </button>

@@ -26,13 +26,13 @@ export default function MobileNav() {
 
   return (
     <div className="md:hidden fixed bottom-3 inset-x-4 z-50 pointer-events-none">
-      <nav className="pointer-events-auto max-w-md mx-auto backdrop-blur-2xl bg-slate-950/85 border border-white/[0.12] rounded-2xl p-1.5 shadow-2xl shadow-black/80 flex items-center justify-around ring-1 ring-white/5">
+      <nav className="pointer-events-auto max-w-md mx-auto backdrop-blur-2xl bg-white/95 border border-slate-200/90 rounded-2xl p-1.5 shadow-xl shadow-slate-900/10 flex items-center justify-around ring-1 ring-slate-100">
         <Link
           href="/calendar"
           className={`flex-1 flex flex-col items-center py-2 px-1 rounded-xl transition-all duration-150 ${
             pathname.startsWith("/calendar")
-              ? "bg-blue-600/25 text-blue-400 font-bold border border-blue-500/30"
-              : "text-slate-400 hover:text-slate-200"
+              ? "bg-blue-50 text-blue-600 font-bold border border-blue-200"
+              : "text-slate-500 hover:text-slate-900"
           }`}
         >
           <Calendar className="w-4 h-4 mb-1" />
@@ -43,8 +43,8 @@ export default function MobileNav() {
           href="/mileage"
           className={`flex-1 flex flex-col items-center py-2 px-1 rounded-xl transition-all duration-150 ${
             pathname.startsWith("/mileage")
-              ? "bg-blue-600/25 text-blue-400 font-bold border border-blue-500/30"
-              : "text-slate-400 hover:text-slate-200"
+              ? "bg-blue-50 text-blue-600 font-bold border border-blue-200"
+              : "text-slate-500 hover:text-slate-900"
           }`}
         >
           <Gauge className="w-4 h-4 mb-1" />
@@ -56,11 +56,11 @@ export default function MobileNav() {
             href="/admin"
             className={`flex-1 flex flex-col items-center py-2 px-1 rounded-xl transition-all duration-150 ${
               pathname.startsWith("/admin")
-                ? "bg-purple-600/25 text-purple-400 font-bold border border-purple-500/30"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-purple-50 text-purple-600 font-bold border border-purple-200"
+                : "text-slate-500 hover:text-slate-900"
             }`}
           >
-            <Shield className="w-4 h-4 mb-1 text-amber-400" />
+            <Shield className="w-4 h-4 mb-1 text-amber-500" />
             <span className="text-[11px] font-medium">後台控管</span>
           </Link>
         )}
