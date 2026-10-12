@@ -2,6 +2,9 @@
 
 import { X, Calendar, Clock, Car, Folder, Users, User, FileText, Gauge, Trash2, Edit3 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { getVehicleImage } from "@/lib/vehicleImages";
+
 
 interface BookingDetailModalProps {
   booking: any | null;
@@ -82,13 +85,24 @@ export default function BookingDetailModal({
 
           {/* 車輛與專案資訊 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/[0.06]">
-              <div className="flex items-center space-x-2 text-xs font-bold text-slate-400 mb-1">
-                <Car className="w-4 h-4 text-cyan-400" />
-                <span>借用車輛</span>
+            <div className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/[0.06] flex items-center space-x-3">
+              <div className="relative w-14 h-11 rounded-lg overflow-hidden flex-shrink-0 border border-white/10 bg-slate-900">
+                <Image
+                  src={getVehicleImage(booking.vehicle.model, booking.vehicle.plateNumber)}
+                  alt={booking.vehicle.model}
+                  fill
+                  className="object-cover"
+                  sizes="56px"
+                />
               </div>
-              <p className="font-mono font-bold text-slate-100 text-sm">{booking.vehicle.plateNumber}</p>
-              <p className="text-xs text-slate-400 font-medium">{booking.vehicle.model}</p>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center space-x-1.5 text-xs font-bold text-slate-400">
+                  <Car className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>借用車輛</span>
+                </div>
+                <p className="font-mono font-bold text-slate-100 text-sm mt-0.5">{booking.vehicle.plateNumber}</p>
+                <p className="text-xs text-slate-400 font-medium truncate">{booking.vehicle.model}</p>
+              </div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/[0.06]">

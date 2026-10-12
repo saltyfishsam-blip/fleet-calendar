@@ -2,7 +2,21 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Car, Lock, User, ArrowRight, AlertCircle, Loader2, Sparkles, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import {
+  Car,
+  Lock,
+  User,
+  ArrowRight,
+  AlertCircle,
+  Loader2,
+  ShieldCheck,
+  CalendarCheck,
+  CloudSun,
+  Gauge,
+  Sparkles,
+} from "lucide-react";
+import { SYSTEM_BACKGROUNDS } from "@/lib/vehicleImages";
 
 function LoginForm() {
   const router = useRouter();
@@ -34,7 +48,7 @@ function LoginForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMsg(data.error || "登入失敗，請確認帳號密碼");
+        setErrorMsg(data.error || "帳號或密碼錯誤，請重新確認");
         setLoading(false);
         return;
       }
@@ -42,27 +56,39 @@ function LoginForm() {
       router.push(redirectPath);
       router.refresh();
     } catch {
-      setErrorMsg("連線伺服器異常，請稍後再試");
+      setErrorMsg("伺服器連線異常，請稍後再試");
       setLoading(false);
     }
   };
 
   return (
-    <div className="relative overflow-hidden backdrop-blur-2xl bg-slate-900/60 border border-white/[0.12] rounded-3xl p-6 sm:p-9 shadow-2xl shadow-black/80 ring-1 ring-white/10">
-      {/* 內部環境光暈 */}
-      <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="w-full max-w-md mx-auto">
+      {/* 標題與引導 */}
+      <div className="mb-8">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-3">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>企業級公務車輛調度平台</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          同仁登入
+        </h2>
+        <p className="text-xs sm:text-sm text-slate-400 mt-1.5 font-normal">
+          請輸入您的企業帳號與密碼以進行出車排程與紀錄查詢
+        </p>
+      </div>
 
+      {/* 錯誤訊息提示 */}
       {errorMsg && (
-        <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-start space-x-3 text-rose-400 text-xs font-semibold animate-in fade-in duration-150">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+        <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/25 flex items-start space-x-3 text-rose-300 text-xs font-medium animate-in fade-in duration-200">
+          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-rose-400" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+      {/* 登入表單 */}
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          <label className="block text-xs font-semibold text-slate-300 mb-2 tracking-wide">
             使用者帳號
           </label>
           <div className="relative">
@@ -73,8 +99,8 @@ function LoginForm() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="請輸入帳號"
-              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-950/80 border border-white/[0.1] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/50 transition text-sm font-medium"
+              placeholder="請輸入系統帳號"
+              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-900/80 border border-white/[0.1] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/50 transition text-sm font-medium"
               disabled={loading}
               required
             />
@@ -82,7 +108,7 @@ function LoginForm() {
         </div>
 
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          <label className="block text-xs font-semibold text-slate-300 mb-2 tracking-wide">
             登入密碼
           </label>
           <div className="relative">
@@ -93,8 +119,8 @@ function LoginForm() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="請輸入密碼"
-              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-950/80 border border-white/[0.1] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/50 transition text-sm font-medium"
+              placeholder="請輸入登入密碼"
+              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-900/80 border border-white/[0.1] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/50 transition text-sm font-medium"
               disabled={loading}
               required
             />
@@ -104,12 +130,12 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-600/25 border border-white/20 flex items-center justify-center space-x-2 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99]"
+          className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-blue-600/20 border border-white/20 flex items-center justify-center space-x-2 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99] mt-2"
         >
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              <span>驗證登入中...</span>
+              <span>身分驗證中...</span>
             </>
           ) : (
             <>
@@ -119,40 +145,124 @@ function LoginForm() {
           )}
         </button>
       </form>
+
+      {/* 底部企業安全驗證標記 */}
+      <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-500">
+        <div className="flex items-center space-x-1.5">
+          <ShieldCheck className="w-4 h-4 text-cyan-400/80" />
+          <span>SSL 加密安全通道傳輸</span>
+        </div>
+        <span className="text-[11px] text-slate-500 font-mono">v1.2.0</span>
+      </div>
     </div>
   );
 }
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
-      {/* 全域深邃背景光暈 */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-96 h-96 bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen w-full flex flex-col lg:flex-row bg-[#080C14] text-slate-100">
+      {/* 左側：商務出行視覺背景與價值展示（桌面端沉浸展示） */}
+      <div className="relative hidden lg:flex lg:w-3/5 xl:w-2/3 flex-col justify-between p-12 overflow-hidden border-r border-white/[0.06]">
+        {/* 背景圖片 */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={SYSTEM_BACKGROUNDS.loginHero}
+            alt="公務車隊商務出行"
+            fill
+            priority
+            className="object-cover object-center brightness-75 scale-105 transition-transform duration-1000"
+            sizes="(max-width: 1200px) 60vw, 66vw"
+          />
+          {/* 暗色空間微漸層遮罩 */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/60 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-slate-950/60 z-10" />
+        </div>
 
-      <div className="w-full max-w-md relative z-10">
-        {/* Logo 與標題 */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 shadow-2xl shadow-indigo-500/30 mb-4 border border-white/20">
-            <Car className="w-8 h-8 text-white drop-shadow-md" />
+        {/* 頂部品牌商標 */}
+        <div className="relative z-20 flex items-center space-x-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white shadow-xl shadow-indigo-500/25 border border-white/20">
+            <Car className="w-6 h-6 drop-shadow" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+          <div>
+            <h1 className="text-lg font-bold tracking-tight text-white">
+              公務車輛預約系統
+            </h1>
+            <p className="text-xs text-slate-400 font-medium">
+              Fleet Scheduling & Mileage Operations
+            </p>
+          </div>
+        </div>
+
+        {/* 中下部：核心價值與亮點 */}
+        <div className="relative z-20 max-w-2xl mb-4">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 text-cyan-400 text-xs font-semibold mb-4">
+            <span>智慧出勤管理解決方案</span>
+          </div>
+          <h2 className="text-3xl xl:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            智慧調度・精準出勤・里程閉環
+          </h2>
+          <p className="text-sm text-slate-300 mt-3 leading-relaxed font-normal">
+            整合視覺化行事曆排程、出勤區域即時氣象連動與數位化行車里程結算，全方位強化企業車輛運行效率與安全控管。
+          </p>
+
+          {/* 3 項核心特點卡片 */}
+          <div className="grid grid-cols-3 gap-3.5 mt-8">
+            <div className="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.08] shadow-lg">
+              <CalendarCheck className="w-5 h-5 text-blue-400 mb-2" />
+              <div className="text-xs font-bold text-white">排程防衝突</div>
+              <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                時段排他校驗引擎，杜絕重複預約
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.08] shadow-lg">
+              <CloudSun className="w-5 h-5 text-amber-400 mb-2" />
+              <div className="text-xs font-bold text-white">即時出勤氣候</div>
+              <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                全台 22 縣市即時氣候與降雨預警
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.08] shadow-lg">
+              <Gauge className="w-5 h-5 text-emerald-400 mb-2" />
+              <div className="text-xs font-bold text-white">里程閉環回報</div>
+              <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                自動串接出發里程，精算行駛數據
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 底部版權聲明 */}
+        <div className="relative z-20 text-xs text-slate-400 font-medium">
+          © 2026 Fleet Operations System. All rights reserved.
+        </div>
+      </div>
+
+      {/* 右側：簡潔精煉的登入操作區（支援手機自適應） */}
+      <div className="w-full lg:w-2/5 xl:w-1/3 flex flex-col justify-center px-6 sm:px-12 py-12 relative">
+        {/* 手機端頂部微視覺橫幅 */}
+        <div className="lg:hidden mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 shadow-xl shadow-indigo-500/25 border border-white/20 mb-3">
+            <Car className="w-7 h-7 text-white drop-shadow" />
+          </div>
+          <h1 className="text-xl font-bold text-white tracking-tight">
             公務車輛預約系統
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-2 font-medium">
-            請登入您的企業帳號以進行約車調度與里程回報
+          <p className="text-xs text-slate-400 mt-1">
+            行動端企業出勤排程中心
           </p>
         </div>
 
-        <Suspense fallback={<div className="p-8 text-center text-slate-500 font-medium">載入中...</div>}>
+        <Suspense
+          fallback={
+            <div className="p-12 text-center text-slate-400 text-xs font-medium">
+              系統載入中...
+            </div>
+          }
+        >
           <LoginForm />
         </Suspense>
-
-        {/* 底部企業安全標章 */}
-        <div className="mt-8 text-center flex items-center justify-center space-x-1.5 text-xs text-slate-500 font-medium">
-          <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-          <span>企業級資料庫安全加密連線</span>
-        </div>
       </div>
     </div>
   );

@@ -15,8 +15,11 @@ import {
   Filter,
   Sparkles,
 } from "lucide-react";
+import Image from "next/image";
+import { getVehicleImage } from "@/lib/vehicleImages";
 
 interface MileageRecord {
+
   id: number;
   reason: string;
   startDate: string;
@@ -264,11 +267,25 @@ export default function MileagePage() {
                 className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] hover:border-white/[0.18] rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between transition-all duration-150 ring-1 ring-white/5"
               >
                 <div>
-                  {/* 車牌與日期 */}
+                  {/* 車牌、車輛縮圖與日期 */}
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-slate-950 border border-white/[0.1] text-slate-200 shadow-inner">
-                      {r.vehicle.plateNumber}
-                    </span>
+                    <div className="flex items-center space-x-2.5">
+                      <div className="relative w-12 h-9 rounded-lg overflow-hidden border border-white/10 bg-slate-900 flex-shrink-0">
+                        <Image
+                          src={getVehicleImage(r.vehicle.model, r.vehicle.plateNumber)}
+                          alt={r.vehicle.model}
+                          fill
+                          className="object-cover"
+                          sizes="48px"
+                        />
+                      </div>
+                      <div>
+                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-slate-950 border border-white/[0.1] text-slate-200">
+                          {r.vehicle.plateNumber}
+                        </span>
+                        <span className="text-[11px] text-slate-400 font-medium ml-2 hidden sm:inline">{r.vehicle.model}</span>
+                      </div>
+                    </div>
                     <span className="text-xs text-slate-400 font-bold">{dateStr}</span>
                   </div>
 

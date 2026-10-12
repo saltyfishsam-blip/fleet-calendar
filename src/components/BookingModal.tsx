@@ -16,8 +16,11 @@ import {
   Check,
 } from "lucide-react";
 import { TAIWAN_CITIES } from "@/lib/weather";
+import Image from "next/image";
+import { getVehicleImage } from "@/lib/vehicleImages";
 
 interface Vehicle {
+
   id: number;
   plateNumber: string;
   model: string;
@@ -307,7 +310,40 @@ export default function BookingModal({
                 </option>
               ))}
             </select>
+
+            {/* 車輛外觀縮圖與規格卡片 */}
+            {(() => {
+              const selectedV = vehicles.find((v) => String(v.id) === String(vehicleId));
+              if (!selectedV) return null;
+              return (
+                <div className="mt-2.5 p-2.5 rounded-2xl bg-slate-950/70 border border-white/[0.08] flex items-center space-x-3">
+                  <div className="relative w-16 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/10 bg-slate-900">
+                    <Image
+                      src={getVehicleImage(selectedV.model, selectedV.plateNumber)}
+                      alt={selectedV.model}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-mono text-xs font-bold text-blue-300 px-1.5 py-0.5 rounded bg-blue-500/15 border border-blue-500/30">
+                        {selectedV.plateNumber}
+                      </span>
+                      <span className="text-xs text-slate-200 font-semibold truncate">
+                        {selectedV.model}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">
+                      核准乘載：{selectedV.capacity} 人座
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
+
 
           {/* 計畫案件名稱 */}
           <div>

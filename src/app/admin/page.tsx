@@ -20,9 +20,12 @@ import {
   Sparkles,
   Layers,
 } from "lucide-react";
+import Image from "next/image";
+import { getVehicleImage } from "@/lib/vehicleImages";
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<"overview" | "vehicles" | "resources" | "users" | "bookings">("overview");
+
 
   // Dashboard Stats
   const [statsData, setStatsData] = useState<any>(null);
@@ -501,6 +504,7 @@ export default function AdminPage() {
                 <table className="w-full text-left text-xs text-slate-300">
                   <thead className="bg-slate-950/80 text-slate-400 font-bold border-b border-white/[0.08]">
                     <tr>
+                      <th className="p-3.5">車輛外觀</th>
                       <th className="p-3.5">車牌號碼</th>
                       <th className="p-3.5">車輛廠牌型號</th>
                       <th className="p-3.5">乘載人數</th>
@@ -511,10 +515,22 @@ export default function AdminPage() {
                   <tbody className="divide-y divide-white/[0.06]">
                     {vehicles.map((v) => (
                       <tr key={v.id} className="hover:bg-white/[0.03] transition">
+                        <td className="p-3.5">
+                          <div className="relative w-14 h-9 rounded-lg overflow-hidden border border-white/10 bg-slate-900 shadow-sm">
+                            <Image
+                              src={getVehicleImage(v.model, v.plateNumber)}
+                              alt={v.model}
+                              fill
+                              className="object-cover"
+                              sizes="56px"
+                            />
+                          </div>
+                        </td>
                         <td className="p-3.5 font-mono font-bold text-white">{v.plateNumber}</td>
                         <td className="p-3.5 font-medium">{v.model}</td>
                         <td className="p-3.5 font-medium">{v.capacity} 人座</td>
                         <td className="p-3.5">
+
                           <span
                             className={`px-2.5 py-1 rounded-lg text-[11px] font-bold ${
                               v.isActive

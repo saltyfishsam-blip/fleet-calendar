@@ -20,8 +20,11 @@ import {
 import BookingModal from "@/components/BookingModal";
 import BookingDetailModal from "@/components/BookingDetailModal";
 import WeatherWidget from "@/components/WeatherWidget";
+import Image from "next/image";
+import { getVehicleImage } from "@/lib/vehicleImages";
 
 interface BookingItem {
+
   id: number;
   reason: string;
   startDate: string;
@@ -315,8 +318,49 @@ export default function CalendarPage() {
           </div>
         </div>
 
+        {/* 車輛快速圖片切換選單 */}
+        {vehicles.length > 0 && (
+          <div className="mt-3.5 pt-3 border-t border-white/[0.06] flex items-center space-x-2 overflow-x-auto pb-1">
+            <span className="text-[11px] font-bold text-slate-400 flex-shrink-0 mr-1">車輛篩選：</span>
+            <button
+              onClick={() => setSelectedVehicleId("all")}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 flex-shrink-0 transition cursor-pointer border ${
+                selectedVehicleId === "all"
+                  ? "bg-blue-600/30 text-blue-300 border-blue-500/50 shadow-sm"
+                  : "bg-slate-950/60 text-slate-400 border-white/[0.06] hover:text-white hover:bg-slate-900"
+              }`}
+            >
+              <Car className="w-3.5 h-3.5 text-cyan-400" />
+              <span>所有車輛 ({vehicles.length})</span>
+            </button>
+            {vehicles.map((v) => (
+              <button
+                key={v.id}
+                onClick={() => setSelectedVehicleId(String(v.id))}
+                className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 flex-shrink-0 transition cursor-pointer border ${
+                  selectedVehicleId === String(v.id)
+                    ? "bg-blue-600/30 text-blue-300 border-blue-500/50 shadow-sm"
+                    : "bg-slate-950/60 text-slate-400 border-white/[0.06] hover:text-white hover:bg-slate-900"
+                }`}
+              >
+                <div className="relative w-5 h-5 rounded-md overflow-hidden flex-shrink-0 border border-white/10 bg-slate-900">
+                  <Image
+                    src={getVehicleImage(v.model, v.plateNumber)}
+                    alt={v.model}
+                    fill
+                    className="object-cover"
+                    sizes="20px"
+                  />
+                </div>
+                <span className="font-mono">{v.plateNumber}</span>
+                <span className="text-[11px] text-slate-400 hidden sm:inline">{v.model}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* 時段圖例說明 */}
-        <div className="mt-4 pt-3 border-t border-white/[0.06] flex flex-wrap items-center gap-4 text-xs text-slate-400 font-medium">
+        <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap items-center gap-4 text-xs text-slate-400 font-medium">
           <span className="font-bold text-slate-300">時段圖例：</span>
           <div className="flex items-center space-x-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></span>
@@ -457,64 +501,78 @@ export default function CalendarPage() {
                 <div
                   key={b.id}
                   onClick={() => setSelectedBookingForDetail(b)}
-                  className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] hover:border-white/[0.18] rounded-2xl p-4 sm:p-5 shadow-xl transition-all duration-150 cursor-pointer active:scale-[0.99] group ring-1 ring-white/5"
+                  className="backdrop-blur-xl bg-slate-900/60 border border-white/[0.08] hover:border-white/[0.18] rounded-2xl p-4 sm:p-5 shadow-xl transition-all duration-150 cursor-pointer active:scale-[0.99] group ring-1 ring-white/5 flex flex-col sm:flex-row gap-4 items-start"
                 >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex items-center space-x-2.5">
-                      <span className={`px-2.5 py-1 rounded-lg text-xs font-bold border shadow-sm ${getSlotColor(b.timeSlot)}`}>
-                        {b.timeSlot === "MORNING" ? "上午" : b.timeSlot === "AFTERNOON" ? "下午" : "全天"}
-                      </span>
-                      <span className="text-sm font-black text-slate-100">{datePart}</span>
-                      <span className="text-xs text-slate-400 font-medium hidden sm:inline">{slotLabel}</span>
-                    </div>
-
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-slate-950 border border-white/[0.1] text-slate-200 shadow-inner">
+                  {/* 車輛縮圖 */}
+                  <div className="relative w-full sm:w-28 h-20 rounded-xl overflow-hidden flex-shrink-0 border border-white/10 bg-slate-950">
+                    <Image
+                      src={getVehicleImage(b.vehicle.model, b.vehicle.plateNumber)}
+                      alt={b.vehicle.model}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 640px) 100vw, 112px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                    <span className="absolute bottom-1.5 left-2 font-mono text-[10px] font-bold text-white bg-slate-900/90 px-1.5 py-0.5 rounded border border-white/10 shadow-sm">
                       {b.vehicle.plateNumber}
                     </span>
                   </div>
 
-                  {/* 借用事由 */}
-                  <h4 className="text-base font-bold text-white group-hover:text-cyan-400 transition mb-2 tracking-wide">
-                    {b.reason}
-                  </h4>
+                  {/* 預約詳情內容 */}
+                  <div className="flex-1 min-w-0 w-full">
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className={`px-2 py-0.5 rounded-lg text-xs font-bold border shadow-sm ${getSlotColor(b.timeSlot)}`}>
+                          {b.timeSlot === "MORNING" ? "上午" : b.timeSlot === "AFTERNOON" ? "下午" : "全天"}
+                        </span>
+                        <span className="text-sm font-black text-slate-100">{datePart}</span>
+                        <span className="text-xs text-slate-400 font-medium hidden sm:inline">{slotLabel}</span>
+                      </div>
 
-                  {/* 案件與借用人資訊 */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-slate-300">
-                    <div className="flex items-center space-x-1.5 text-slate-400">
-                      <Folder className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>{b.project ? b.project.name : "一般洽公"}</span>
-                    </div>
-
-                    <div className="flex items-center space-x-1.5 text-slate-400">
-                      <Car className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>{b.vehicle.model}</span>
-                    </div>
-
-                    <div className="flex items-center space-x-1.5 text-slate-400">
-                      <Users className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>
-                        借用人：{b.user.name}
-                        {b.companions.length > 0 ? ` + ${b.companions.length} 位同行` : ""}
+                      <span className="text-xs text-slate-400 font-medium">
+                        {b.vehicle.model}
                       </span>
                     </div>
-                  </div>
 
-                  {/* 同行人員 Chips */}
-                  {b.companions.length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap gap-1.5">
-                      <span className="text-xs text-slate-400 py-0.5 font-medium">同行人員：</span>
-                      {b.companions.map((c) => (
-                        <span
-                          key={c.id}
-                          className="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 text-[11px] font-medium"
-                        >
-                          {c.name}
+                    {/* 借用事由 */}
+                    <h4 className="text-base font-bold text-white group-hover:text-cyan-400 transition mb-2 tracking-wide">
+                      {b.reason}
+                    </h4>
+
+                    {/* 案件與借用人資訊 */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
+                      <div className="flex items-center space-x-1.5 text-slate-400">
+                        <Folder className="w-3.5 h-3.5 text-cyan-400" />
+                        <span className="truncate">{b.project ? b.project.name : "一般洽公"}</span>
+                      </div>
+
+                      <div className="flex items-center space-x-1.5 text-slate-400">
+                        <Users className="w-3.5 h-3.5 text-cyan-400" />
+                        <span className="truncate">
+                          借用人：{b.user.name}
+                          {b.companions.length > 0 ? ` + ${b.companions.length} 位同行` : ""}
                         </span>
-                      ))}
+                      </div>
                     </div>
-                  )}
+
+                    {/* 同行人員 Chips */}
+                    {b.companions.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap gap-1.5">
+                        <span className="text-xs text-slate-400 py-0.5 font-medium">同行人員：</span>
+                        {b.companions.map((c) => (
+                          <span
+                            key={c.id}
+                            className="px-2 py-0.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 text-[11px] font-medium"
+                          >
+                            {c.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
+
             })
           )}
         </div>
